@@ -7,7 +7,7 @@ requirements = [
     "html2text",
     "httplib2",
     "keyring",
-    "py-oauth2 ",
+    "oauth2",
     "pysqlite ",
     "regex",
     "sqlalchemy",
