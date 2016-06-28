@@ -22,6 +22,8 @@ class SyncThread(QtCore.QThread):
         self.app = AppClass.instance()
         self._init_timer()
         self._init_locks()
+        self.status = const.STATUS_NONE
+        self.sync_state = None
 
     def _init_sync(self):
         """Init sync"""
