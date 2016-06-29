@@ -2,13 +2,29 @@ from setuptools import setup, find_packages
 from distutils.command.build_py import build_py as _build_py
 import os
 from subprocess import call
+from glob import glob
 
 class build_py(_build_py):
-    _RSRC_FILE=os.path.join("everpad", "everpad.qrc")
+    _RSRC_FILE="everpad.qrc"
+
+    def create_qrc(self):
+        print("Generating resources file %s" % self._RSRC_FILE)
+        with open(self._RSRC_FILE, "w") as qrc:
+            qrc.write("""<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource prefix="/">
+""")
+            for png in glob("data/*.png"):
+                qrc.write('    <file alias="%s">%s</file>\n' % (os.path.basename(png), png))
+            qrc.write("""  </qresource>
+</RCC>
+""")
+
     def run(self):
+        self.create_qrc()
         infile = self._RSRC_FILE
-        outfile = infile.replace(".qrc", "_rc.py")
-        print("Compiling resources file %s" % infile)
+        outfile = os.path.join("everpad", infile.replace(".qrc", "_rc.py"))
+        print("Compiling resources file %s to %s" % (infile, outfile))
         call(["pyside-rcc", "-o", outfile, infile])
         _build_py.run(self)
 
