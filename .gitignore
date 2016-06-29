@@ -9,3 +9,5 @@ syntax: glob
 *.egg
 *.egg-info
 tests/settings/local.py
+everpad.qrc
+everpad/everpad_rc.py
