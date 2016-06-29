@@ -1,7 +1,7 @@
 from PySide.QtGui import QIcon
 from everpad.specific.unity.launcher import UnityLauncher
 import os
-
+from .. import everpad_rc
 
 launchers = {
     'ubuntu': UnityLauncher,
@@ -17,11 +17,11 @@ def get_launcher(*args, **kwargs):
 
 def get_tray_icon(is_black=False):
     if os.environ.get('DESKTOP_SESSION', 'default') == 'gnome':
-        return QIcon.fromTheme('everpad', QIcon('../../data/everpad.png'))
+        return QIcon.fromTheme('everpad', QIcon(':/everpad.png'))
     if is_black:
-        return QIcon.fromTheme('everpad-black', QIcon('../../data/everpad-black.png'))
+        return QIcon.fromTheme('everpad-black', QIcon(':/everpad-black.png'))
     else:
-        return QIcon.fromTheme('everpad-mono', QIcon('../../data/everpad-mono.png'))
+        return QIcon.fromTheme('everpad-mono', QIcon(':/everpad-mono.png'))
 
 
 if 'kde' in os.environ.get('DESKTOP_SESSION', '') or os.environ.get('KDE_FULL_SESSION') == 'true':  # kde init qwidget for wallet access

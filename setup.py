@@ -1,5 +1,16 @@
 from setuptools import setup, find_packages
+from distutils.command.build_py import build_py as _build_py
 import os
+from subprocess import call
+
+class build_py(_build_py):
+    _RSRC_FILE=os.path.join("everpad", "everpad.qrc")
+    def run(self):
+        infile = self._RSRC_FILE
+        outfile = infile.replace(".qrc", "_rc.py")
+        print("Compiling resources file %s" % infile)
+        call(["pyside-rcc", "-o", outfile, infile])
+        _build_py.run(self)
 
 version = '2.5'
 requirements = [
@@ -21,6 +32,7 @@ setup(
     version=version,
     description="Ubuntu integrated evernote client",
     long_description=open('README.rst').read(),
+    cmdclass = { "build_py": build_py },
     classifiers=[
         'Programming Language :: Python',
     ],
